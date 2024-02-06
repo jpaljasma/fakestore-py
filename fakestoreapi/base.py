@@ -4,6 +4,8 @@ import requests
 
 class Base:
     API_ENDPOINT = "https://fakestoreapi.com/"
+    CONNECT_TIMEOUT = 0.5
+    READ_TIMEOUT = 5
 
     def __init__(self) -> None:
         pass
@@ -21,8 +23,8 @@ class Base:
             "Accept-Language": "en-US,en;q=0.9,et;q=0.8,la;q=0.7",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
         }
-
-        response = requests.get(f"{self.API_ENDPOINT}", headers=hdrs)
+        timeout = (self.CONNECT_TIMEOUT, self.READ_TIMEOUT)
+        response = requests.get(f"{self.API_ENDPOINT}", headers=hdrs, timeout=timeout)
 
         if response.status_code == 200:
             return response.json()
